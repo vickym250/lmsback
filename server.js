@@ -32,7 +32,11 @@ try {
 
 // Connect to MongoDB
 const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/testdb";
-mongoose.connect(MONGO_URI)
+mongoose.connect(MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  serverSelectionTimeoutMS: 10000, // 10 seconds
+})
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.error("MongoDB connection error:", err));
 // Routes

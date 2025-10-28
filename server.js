@@ -32,7 +32,10 @@ try {
 
 // Connect to MongoDB
 const MONGO_URI ="mongodb+srv://vtech250m_db_user:OjGWnzoY6iT3cQP7@cluster0.uctpl7d.mongodb.net/"
-mongoose.connect(MONGO_URI)
+mongoose.connect(MONGO_URI,{
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.error("MongoDB connection error:", err));
 // Routes

@@ -8,8 +8,8 @@ import Course from "../models/course.js";
 dotenv.config();
 
 const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID,
-  key_secret: process.env.RAZORPAY_KEY_SECRET,
+  key_id: "rzp_live_RSbqXqGXXLi8VP",
+  key_secret: "aEGGafcok6O17i7x0qTSjhqZ",
 });
 
 // =====================

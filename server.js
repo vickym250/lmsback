@@ -31,7 +31,7 @@ try {
 }
 
 // Connect to MongoDB
-const MONGO_URI ="mongodb+srv://vtech250m_db_user:OjGWnzoY6iT3cQP7@cluster0.uctpl7d.mongodb.net/lms_db";
+const MONGO_URI ="mongodb+srv://vtech250m_db_user:OjGWnzoY6iT3cQP7@cluster0.uctpl7d.mongodb.net/test";
 
 mongoose.connect(MONGO_URI,{
     useNewUrlParser: true,

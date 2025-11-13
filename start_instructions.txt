@@ -1,0 +1,8 @@
+
+Steps to run:
+1. unzip the project
+2. cd firebase_mongo_backend
+3. npm install
+4. add your Firebase service account JSON as serviceAccountKey.json in project root
+5. create .env or edit .env.example
+6. npm run dev

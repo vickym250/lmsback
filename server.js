@@ -28,16 +28,22 @@ app.use("/uploads", express.static("uploads"));
 // ============================
 // 🔥 Initialize Firebase Admin
 // ============================
+import fs from "fs";
+
+
 try {
-  const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY);
+  const serviceAccount = JSON.parse(
+    fs.readFileSync("./serviceAccountKey.json", "utf-8")
+  );
+
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
   });
-  console.log("✅ Firebase admin initialized successfully");
-} catch (err) {
-  console.error("❌ Firebase initialization failed:", err.message);
-}
 
+  console.log("✅ Firebase connected successfully!");
+} catch (error) {
+    console.error("❌ Firebase connection failed:", error.message);
+}
 // ============================
 // 🌍 Connect MongoDB
 // ============================

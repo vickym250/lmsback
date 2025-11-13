@@ -4,6 +4,7 @@ import admin from "firebase-admin";
 import dotenv from "dotenv";
 import cors from "cors";
 import bodyParser from "body-parser";
+
 import authRoutes from "./src/routes/authRoutes.js";
 import { course } from "./src/routes/course.js";
 import paymentRoutes from "./src/routes/payment.js";
@@ -14,6 +15,10 @@ import teacher from "./src/routes/admin.js";
 dotenv.config();
 
 const app = express();
+
+// ============================
+// ⚙️ Middleware
+// ============================
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -25,38 +30,33 @@ app.use("/uploads", express.static("uploads"));
 // ============================
 try {
   const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY);
-
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
   });
-
   console.log("✅ Firebase admin initialized successfully");
 } catch (err) {
   console.error("❌ Firebase initialization failed:", err.message);
 }
 
-<<<<<<< HEAD
 // ============================
 // 🌍 Connect MongoDB
 // ============================
+
+// 👉 Option 1: use .env MONGO_URI
 const MONGO_URI = process.env.MONGO_URI;
 
+// 👉 Option 2: fallback (direct string)
+const DEFAULT_MONGO =
+  "mongodb+srv://vtech250m_db_user:OjGWnzoY6iT3cQP7@cluster0.uctpl7d.mongodb.net/";
+
 mongoose
-  .connect(MONGO_URI)
+  .connect(MONGO_URI || DEFAULT_MONGO)
   .then(() => console.log("✅ MongoDB connected"))
   .catch((err) => console.error("❌ MongoDB connection error:", err));
 
 // ============================
 // 📦 Routes
 // ============================
-=======
-// Connect to MongoDB
-const MONGO_URI ="mongodb+srv://vtech250m_db_user:OjGWnzoY6iT3cQP7@cluster0.uctpl7d.mongodb.net/"
-mongoose.connect(MONGO_URI)
-  .then(() => console.log("MongoDB connected"))
-  .catch(err => console.error("MongoDB connection error:", err));
-// Routes
->>>>>>> 025c9a7 (first commit)
 app.use("/api/auth", authRoutes);
 app.use("/api/course", course);
 app.use("/api/payment", paymentRoutes);

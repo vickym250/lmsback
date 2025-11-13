@@ -19,7 +19,10 @@ const app = express();
 // ============================
 // ⚙️ Middleware
 // ============================
-app.use(cors());
+app.use(cors({
+  origin: ["http://13.48.5.245:5173"],  // frontend ka exact URL likho
+  credentials: true, // agar cookies ya JWT token bhej rahe ho
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());

@@ -20,10 +20,10 @@ const app = express();
 // ⚙️ Middleware
 // ============================
 app.use(cors({
-  origin: "*",
+  origin: "https://vidiyalink.online",
+  methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());

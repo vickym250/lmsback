@@ -24,7 +24,8 @@ app.use(
   cors({
     origin: [
       "https://vidiyalink.online",     // frontend
-      "https://api.vidiyalink.online"  // backend domain
+      "https://api.vidiyalink.online" ,// backend domain
+       "http://localhost:5173"
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,

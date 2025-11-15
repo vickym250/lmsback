@@ -4,6 +4,7 @@ import admin from "firebase-admin";
 import dotenv from "dotenv";
 import cors from "cors";
 import bodyParser from "body-parser";
+import fs from "fs";
 
 import authRoutes from "./src/routes/authRoutes.js";
 import { course } from "./src/routes/course.js";
@@ -17,13 +18,23 @@ dotenv.config();
 const app = express();
 
 // ============================
-// ⚙️ Middleware
+// ⚙️ CORS FIX (IMPORTANT)
 // ============================
-app.use(cors({
-  origin: "https://vidiyalink.online",
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: [
+      "https://vidiyalink.online",     // frontend
+      "https://api.vidiyalink.online"  // backend domain
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
+// ============================
+// 🔧 Middleware
+// ============================
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -32,9 +43,6 @@ app.use("/uploads", express.static("uploads"));
 // ============================
 // 🔥 Initialize Firebase Admin
 // ============================
-import fs from "fs";
-
-
 try {
   const serviceAccount = JSON.parse(
     fs.readFileSync("./serviceAccountKey.json", "utf-8")
@@ -46,16 +54,14 @@ try {
 
   console.log("✅ Firebase connected successfully!");
 } catch (error) {
-    console.error("❌ Firebase connection failed:", error.message);
+  console.error("❌ Firebase connection failed:", error.message);
 }
+
 // ============================
 // 🌍 Connect MongoDB
 // ============================
-
-// 👉 Option 1: use .env MONGO_URI
 const MONGO_URI = process.env.MONGO_URI;
 
-// 👉 Option 2: fallback (direct string)
 const DEFAULT_MONGO =
   "mongodb+srv://vtech250m_db_user:OjGWnzoY6iT3cQP7@cluster0.uctpl7d.mongodb.net/";
 
@@ -75,11 +81,14 @@ app.use("/api/email", email);
 app.use("/api/admin", teacher);
 
 app.get("/", (req, res) => {
-  res.send("🚀 Firebase + MongoDB backend is running successfully!");
+  res.send("🚀 Backend working successfully via HTTPS!");
 });
 
 // ============================
 // ⚡ Start Server
 // ============================
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
+
+app.listen(PORT, () =>
+  console.log(`✅ Server running on https://api.vidiyalink.online (PORT: ${PORT})`)
+);
